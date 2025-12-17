@@ -1,0 +1,46 @@
+/*
+Runtime 6 ms
+Beats 19.44%
+
+Memory 15.68 MB
+Beats 44.93%
+
+The time could still use improvement, but the memory does seem to be fine
+*/
+class Solution {
+public:
+    int findFinalValue(vector<int>& nums, int original) {
+        //map made to hold previous numbers in the list to check faster
+        unordered_map<int,int> prevNums;
+        bool repeat = true;
+        int i = 0;
+        //loops till the end of nums list
+        while( i < nums.size()){
+            // if num is equal to original double
+            if(original == nums[i]){
+                original = (2 * original);
+            }
+            //if the number original is in the map double original
+            else if (prevNums.end() != prevNums.find(original)){
+                original = (2 * original);
+            }
+            //if number is not the same add number to map
+            else{
+                prevNums[nums[i]] = {0};
+            }
+            i++;
+        }
+        //sometimes the loop finishes and doesn't check again, will likely need another check
+        
+        while(repeat==true){
+            if (prevNums.end() != prevNums.find(original)){
+                original = (2 * original);
+            }
+            //if number is not the same, add number to map
+            else{
+                repeat = false;
+            }
+        }
+        return original;
+    }
+};
